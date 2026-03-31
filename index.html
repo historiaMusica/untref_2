@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+ 
+ 
+
+
+
+ <style>
+
+body {
+  position: relative;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 0; /* importante para que quede encima del fondo */
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Vitruvian_Man_by_Leonardo_da_Vinci.jpg/1024px-Vitruvian_Man_by_Leonardo_da_Vinci.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+  opacity: 0.30; /* nivel de transparencia */
+  z-index: -1;
+  pointer-events: none;
+}
+
+     /* body {
+       background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Vitruvian_Man_by_Leonardo_da_Vinci.jpg/1024px-Vitruvian_Man_by_Leonardo_da_Vinci.jpg');
+       background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+  background-color: #ffffff80;
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+      min-height: 50vh;
+
+    }  */
+
+    h1 {
+      /* font-family: 'Georgia', serif; */
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+      color: #060606;
+      text-align: center;
+    }
+
+   
+
+
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      perspective: 1000px;
+      background-color: #ffffff5e;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+      max-width: 1400px;
+    }
+
+    .card {
+      width: 150px;
+      height: 220px;
+      perspective: 1000px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+      position: relative;
+    }
+
+    .card.caida .card-inner {
+      transform: rotateX(100deg);
+      transform-origin: bottom center;
+    }
+
+    /* .card-front {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #f9f9f9;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+    } */
+.card-front {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  gap: 8px;
+}
+
+.card-front {
+  background: #ffffffe5;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  background-color: #5f530c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.play-btn i {
+  font-size: 1rem;
+}
+
+.play-btn:hover {
+  background-color: #a79219;
+}
+
+    .card-front img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 2px;
+      border: 1.5px solid #888;
+      margin-bottom: 12px;
+    }
+
+    .card-front .nombre {
+      font-size: 0.75rem;
+      color: #222;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .base {
+      width: 150px;
+      height: 12px;
+      background-color: #ffffff7b;
+            border-top: 2px solid rgba(170, 170, 170, 0);
+      border-radius: 0 0 6px 6px;
+      margin-top: -4px;
+      z-index: -1;
+      transform: translateY(100%);
+    }
+
+    .card.caida .card-inner::after {
+      content: "✕";
+      font-size: 42px;
+      color: rgb(119, 36, 5);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+   
+    .audio-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.audio-controls button {
+  background-color: #5f530c;
+  border: none;
+  border-radius: 6px;
+  padding: 8px;
+  color: rgba(255, 255, 255, 0.858);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.audio-controls button:hover {
+  background-color: #a79219;
+}
+
+.header-con-boton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1100px;
+  margin-bottom: 20px;
+}
+
+.header-con-boton h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  color: #1c1c1c;
+  
+}
+
+#btn-global-play {
+  background-color: #fff;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#btn-global-play:hover {
+  background-color: #eee;
+}
+
+/* .titulo-con-botones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  margin-bottom: 16px;
+} */
+#encabezado-global {
+  background-color: #ffffff38;
+
+  display: flex;
+  justify-content: center; /* Centra todo el contenedor horizontalmente */
+  align-items: center;     /* Centra verticalmente */
+  gap: 3px;                  /* Sin espacio entre título y botón */
+  max-width: 1400px;
+  width: 100%;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+
+#titulo-principal {
+  font-weight: bold;
+  font-size: clamp(1.2rem, 4vw, 2.4rem);
+  margin: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#botones-globales {
+  display: flex;
+  align-items: center;
+  margin-left: 0; /* Para evitar espacios extras */
+}
+
+#botones-globales .play-btn {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.5rem;
+  background-color: #5f530c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  /* Para que el botón también se achique proporcionalmente */
+}
+
+#botones-globales .play-btn:hover {
+  background-color: #5f530c;
+}
+
+#botones-globales .play-btn i {
+  font-size: 1.3em;
+  pointer-events: none;
+}
+
+
+
+.panel-control {
+  width: 160px;
+  height: 120px;
+  padding-top: 12px;
+}
+
+.panel-control .card-front {
+  justify-content: space-evenly;
+  gap: 12px;
+}
+
+.panel-control button {
+  font-size: 24px;
+  padding: 8px 12px;
+  background-color: #ddd;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.panel-control button:hover {
+  background-color: #bbb;
+}
+
+.boton-audio-global {
+  background-color: #f9f9f9;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.boton-audio-global:hover {
+  background-color: #e0e0e0;
+}
+
+#audio-global-info {
+  font-weight: bold;
+  margin-top: 10px;
+  display: none;
+}
+
+.audio-info {
+  font-size: 0.75em;
+  color: #333;
+  margin-top: 4px;
+  word-break: break-all;
+}
+
+.card .audio-info {
+  display: none !important;
+}
+
+.bg-light {
+    --bs-bg-opacity: 1;
+    background-color: #ffffff7b !important;
+
+}
+
+.aclaracion-filtros {
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-top: 2rem;
+  text-align: right !important;
+}
+
+#filtros {
+  background-color: #ffffff7b;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  max-width: 1400px;
+  padding-top: 5% !important;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  margin-bottom: 0;
+
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden; 
+}
+
+.p-4 {
+  padding: 0.5rem !important ;
+}
+
+/* #filtros.hidden-mobile {
+    max-height: 0;
+    opacity: 0;
+    padding: 0 !important;
+    pointer-events: none;
+  } */
+
+  #filtros.hidden-mobile {
+    display: none;
+  }
+
+  #toggle-filtros {
+    display: block;           /* Que sea bloque para que tome todo el ancho disponible */
+  margin-bottom: 1rem;
+  background: none;
+  border: none;
+  padding: 0;
+  padding-top: 50px;
+  font-size: 1rem;
+  color: #74460a;
+  cursor: pointer;
+  text-align: left !important;
+  font-weight: 600;
+  width: fit-content;      /* El ancho se adapta al texto */
+
+}
+#toggle-filtros:hover {
+  text-decoration: underline;
+}
+
+#toggle-filtros {
+  align-self: flex-start;  /* Para contenedores flex */
+}
+
+.my-4{
+  margin-top: 0 !important;
+}
+
+@media (max-width: 998px) {
+    #filtros label {
+      font-size: 0.85rem;
+    }
+
+  }
+
+
+  @media (max-width: 768px) {
+    body::before {
+    background-size: cover;
+    background-position: center top;
+    background-attachment: scroll; /* 🔄 importante para móviles */
+  }
+}
+
+@media (min-width: 769px) {
+  #toggle-filtros {
+    display: none;
+  }
+
+  #filtros {
+    display: block !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #toggle-filtros {
+    display: inline-block;
+  }
+
+  #filtros.hidden-mobile {
+    display: none;
+  }
+
+  #filtros {
+    padding: 15%;
+  }
+
+  #filtros .row {
+    flex-direction: column !important;
+    align-items: center;
+  }
+
+  #filtros .col-md-4 {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .filtros-row > .col-md-4:nth-child(1),
+  .filtros-row > .col-md-4:nth-child(2) {
+    padding-bottom: 0;
+    margin-bottom: -16px; /* quita el espacio entre columnas de "período" */
+  }
+
+  #filtros fieldset {
+    text-align: center;
+  }
+
+  .my-4{
+  margin-top: 0 !important;
+}
+
+  }
+
+    /* #filtros .d-grid {
+      justify-items: center;
+    } */
+  
+
+
+
+  @media (max-width: 550px) {
+    body::before {
+    background-size: cover;
+    background-position: center top;
+    background-attachment: scroll; /* 🔄 importante para móviles */
+  }
+
+    #filtros label {
+      font-size: 0.85rem;
+    }
+
+    .card {
+      width: 130px;
+      height: 220px;
+      perspective: 1000px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    #titulo-principal {
+    font-size: 1.2rem;
+  }
+  #botones-globales .play-btn {
+    font-size: 1.2rem;
+    padding: 0.3rem 0.6rem;
+  }
+  }
+
+  </style>
+</head>
+<body>
+
+  <div class="d-flex align-items-center justify-content-between flex-wrap" id="encabezado-global">
+    <h1 id="titulo-principal" class="flex-grow-1">Historia de la Música I</h1>
+    <div id="botones-globales" class="flex-grow-1"></div>
+  </div>
+  
+  <div id="audio-global-info" class="mt-2 text-muted small" style="display: none;"></div>
+  
+  <!-- <div class="titulo-con-botones">
+    <h1 id="titulo-principal">Historia de la Música I</h1>
+    <div id="audio-global-info" style="display:none; margin-top:10px; font-weight:bold;"></div>
+    <div id="botones-globales"></div>
+  </div> -->
+
+  <!-- <h1>Edad Media, Renacimiento y Barroco</h1> -->
+
+  <button id="toggle-filtros" class="btn btn-secondary d-md-none mb-3">
+    Mostrar/ocultar filtros
+  </button>
+
+
+  <div id="filtros" class="container my-4 p-4">
+    
+    <div class="row g-4 text-center filtros-row">
+  
+      <!-- Período -->
+      <div class="col-12 col-md-4 fs-sm">
+        <fieldset>
+          <legend class="h6 fw-bold text-center mb-3">Período/s o escuela</legend>
+          <div class="d-grid gap-1 text-start lh-sm">
+        
+            <!-- ✅ Todos los labels sin scroll interno -->
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Edad Media">Edad Media</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Ars antiqua">Ars antiqua</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Ars nova">Ars nova</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Ars nova italiano">Ars nova italiano</label> 
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Ars subtilior">Ars subtilior</label> 
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Movimiento trovadoresco">Movimiento trovadoresco</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Renacimiento">Renacimiento</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Renacimiento arcaico">Renacimiento arcaico</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Escuela franco-flamenca">Escuela franco-flamenca</label>
+
+            
+              </div>
+              </fieldset>
+            </div>
+
+            <div class="col-12 col-md-4 fs-sm">
+              <fieldset>
+                <legend class="h6 fw-bold text-center mb-3 d-none d-md-block invisible">Período</legend>
+    <div class="d-grid gap-1 text-start lh-sm">
+           
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Escuelas nacionales">Escuelas nacionales</label>
+            <!-- <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Escuela veneciana">Escuela veneciana</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Escuela española">Escuela española</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Escuela inglesa">Escuela inglesa</label> -->
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Madrigalistas">Madrigalistas</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Barroco">Barroco</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Barroco temprano">Barroco temprano</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Barroco medio">Barroco medio</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Barroco tardío">Barroco tardío</label>
+            </div>
+        </fieldset>
+      </div>
+  
+      <!-- lugar -->
+      <div class="col-12 col-md-4 fs-sm">
+        <fieldset>
+          <legend class="h6 fw-bold text-center mb-3">Lugar de influencia</legend>
+          <div class="d-grid gap-1 text-start lh-sm">
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Alemania">Alemania</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Francia">Francia</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Italia">Italia</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Flandes">Flandes</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Inglaterra">Inglaterra</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="España">España</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Países Bajos">Países Bajos</label>
+          </div>
+        </fieldset>
+      </div>
+  
+      <!-- Género -->
+      <!-- <div class="col-md-4 fs-sm">
+        <fieldset>
+          <legend class="h6 fw-bold text-center mb-3">Género</legend>
+          <div class="d-grid gap-1 text-start lh-sm">
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Misa">Misa</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Motete">Motete</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Canción polifónica medieval">Canción medieval</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Madrigal">Madrigal</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Chanson">Chanson</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Ballata">Ballata</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Conductus">Conductus</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Rondeau">Rondeau</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Virelay">Virelay</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Frottola">Frottola</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Caccia">Caccia</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Hoquetus">Hoquetus</label>
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="genero" value="Fauxbourdon">Fauxbourdon</label>
+          </div>
+        </fieldset>
+      </div> -->
+  
+    </div>
+
+    <p class="aclaracion-filtros text-left text-muted small mb-2">
+      *Los filtros <bold>no son excluyentes</bold>: se muestran compositores que coincidan con al menos uno de ellos. SELECCIONAR DE A UNO A LA VEZ.
+    </p>
+  </div>
+  
+  
+  
+  
+
+
+  <div class="grid" id="tablero">
+    <!-- Las tarjetas de compositores se generan aquí dinámicamente -->
+  </div>
+
+  <script>
+ const datosCompositores = [
+
+
+
+
+  {
+    nombre: "Hildegarda von Bingen",
+    img: "img/hildegard_von_bingen.jpg",
+    periodo: "Edad Media",
+    lugar: "Alemania",
+    generos: ["Organum/Discantus/Conductus"],
+    audios: ["audio/O Virtus Sapientiae.mp3", "audio/O frondens virga.mp3", "audio/Et ideo puellae istae.mp3"]
+  },
+
+
+   //ARS ANTIQUA
+
+  {
+    nombre: "Leonin",
+    img: "img/leoninus.jpg",
+    periodo: ["Edad Media", "Ars antiqua"],
+    lugar: "Francia",
+    generos: ["Organum/Discantus/Conductus", "Motete"],
+    audios: ["audio/Pascha Nostrum.mp3", "audio/Haec dies.mp3"]
+  },
+
+  {
+    nombre: "Perotin",
+    img: "img/perotinus.jpg",
+    periodo: ["Edad Media", "Ars antiqua"],
+    lugar: "Francia",
+    generos: ["Organum/Discantus/Conductus", "Motete"],
+    audios: ["audio/Beata Viscera.mp3", "audio/Sederunt Principes.mp3", "audio/Viderunt Omnes.mp3"]
+  },
+
+  {
+    nombre: "Petrus de Cruce",
+    img: "img/petrus.jpg",
+    periodo: ["Edad Media", "Ars antiqua", "Ars Nova"],
+    lugar: "Francia",
+    generos: ["Motete"],
+    audios: ["audio/Aucun ont trouvé chant par usage.mp3", "audio/Je cuidoie bien metre jus.mp3"]
+  },
+
+
+  //movimiento trovadoresco
+  {
+    nombre: "Adam de la Halle",
+    img: "img/halle.jpg",
+    periodo: ["Edad Media", "Movimiento trovadoresco"],
+    lugar: "Francia",
+    generos: ["Canción polifónica medieval", "Rondeau"],
+    audios: ["audio/Le jeu de Robin et Marion.mp3", "audio/Tant con je vivrai.mp3", "audio/Qui a droit veut amours servir.mp3", "audio/Entre Adan et Hanikiel.mp3"]//norte de francia
+  },
+
+  {
+    nombre: "Guillermo IX",
+    img: "img/guillermonueve.jpg",
+    periodo: ["Edad Media", "Movimiento trovadoresco"],
+    lugar: "Francia",
+    generos: [],
+    audios: ["audio/posdechantar.mp3", "audio/Farai un vers pos mi sonelh.mp3"]
+  },//sur de francia
+
+  {
+    nombre: "Marcabrú",
+    img: "img/marcabru.jpg",
+    periodo: ["Edad Media", "Movimiento trovadoresco"],
+    lugar: "Francia",
+    generos: ["Canción polifónica medieval", "Rondeau"],
+    audios: ["audio/L'autrier jost' una sebissa.mp3"]
+  },//sur de francia
+
+
+
+  {
+    nombre: "Condesa de Día",
+    img: "img/condesa.jpg",
+    periodo: ["Edad Media", "Movimiento trovadoresco"],
+    lugar: "Francia",
+    generos: ["Canción polifónica medieval"],
+    audios: ["audio/A Chanter M'er.mp3", "audio/Estat ai en greu cossirier.mp3", "audio/Ab joy et ab joven m'apais.mp3"]
+  },
+
+
+  //minnesaenger (posterior)
+  {
+    nombre: "Walther von der Vogelweide",
+    img: "img/Walther_von_der_Vogelweide.jpg",
+    periodo: ["Edad Media", "Movimiento trovadoresco"],
+    lugar: "Alemania",
+    generos: ["Canción polifónica medieval"],
+    audios: ["audio/Palastinalied.mp3", "audio/under der Linden.mp3"]
+  },
+  
+
+  {
+    nombre: "Alfonso el sabio",
+    img: "img/alfonso_x.jpg",
+    periodo: ["Edad Media", "Movimiento trovadoresco"],
+    lugar: "España",
+    generos: ["Canción polifónica medieval"],
+    audios: ["audio/Non sofre.mp3", "audio/Non e gran causa - Catherine Bott.mp3"]
+  },
+
+
+
+
+  // .. //
+
+
+  //ARS NOVA
+
+  {
+    nombre: "Philippe de Vitry",
+    img: "img/devitry.jpg",
+    periodo: ["Edad Media", "Ars nova"],
+    lugar: "Francia",
+    generos: ["Motete", "Formas fijas"],
+    audios: ["audio/Cum statua.mp3", "audio/Quoniam secta latronum.mp3", "audio/In Arboris.mp3", "audio/Maria virgo virginum.mp3"]
+  }, // hugo princeps cum structura
+
+
+
+  {
+    nombre: "Guillaume de Machaut",
+    img: "img/guillaume_de_machaut.jpg",
+    periodo: ["Edad Media", "Ars nova"],
+    lugar: "Francia",
+    generos: ["Motete", "Canción polifónica medieval", "Misa", "Balada", "Formas fijas"],
+    audios: ["audio/La Messe de Nostre Dame - Agnus Dei.mp3", "audio/La Messe de Nostre Dame - Kyrie.mp3", "audio/Ballade - Doulz amis.mp3", "audio/Qui es promesse - Ha Fortune.mp3"]
+  }, // Nes que on porroit les estoilles / De fortune me doi plaindre et loer
+
+  {
+    nombre: "Matteo da Perugia",
+    img: "img/perugia.jpg",
+    periodo: ["Edad Media", "Ars nova", "Ars subtilior"],
+    lugar: "Italia",
+    generos: ["Canción polifónica medieval", "Virelay", "Ballata", "Motete", "Rondeau"],
+    audios: ["audio/Se je me plaing de Fortune.mp3", "audio/Le greygnour bien.mp3", "audio/Dame souvrayne.mp3", "audio/Trouver ne puis.mp3"]
+  },//ars subtilior
+
+  {
+    nombre: "Baude Cordier",
+    img: "img/cordier.jpg",
+    periodo: ["Edad Media", "Ars nova", "Ars subtilior"],
+    lugar: "Francia",
+    generos: ["Canción polifónica medieval", "Virelay", "Ballata", "Motete", "Rondeau"],
+    audios: ["audio/Belle, bonne.mp3", "audio/Tout par compas.mp3", "audio/Se cuer d'amant par soy humilier.mp3"]
+  },//ars subtilior
+
+  {
+    nombre: "Johannes Ciconia",
+    img: "img/ciconia.jpg",
+    periodo: ["Edad Media", "Ars nova", "Ars subtilior"],
+    lugar: "Italia",
+    generos: [],
+    audios: ["audio/Gli atti col dançar.mp3", "audio/Vir Mitis.mp3", "audio/Merce o morte.mp3"]
+  },
+
+
+
+  //ars nova italiano
+  {
+    nombre: "Giovanni da Cascia",
+    img: "img/daCascia.jpg",
+    periodo: ["Edad Media", "Ars nova", "Ars nova italiano"],
+    lugar: "Italia",
+    generos: ["Canción polifónica medieval", "Madrigal medieval", "Caccia"],
+    audios: ["audio/Appress' un fiume chiaro.mp3", "audio/Per larghi prati.mp3", "audio/Per ridd' andando.mp3"]
+  },
+
+  {
+    nombre: "Magister Piero",
+    img: "img/piero.jpg",
+    periodo: ["Edad Media", "Ars nova", "Ars nova italiano"],
+    lugar: "Italia",
+    generos: ["Canción polifónica medieval", "Madrigal medieval", "Caccia"],
+    audios: ["audio/Con dolce brama.mp3", "audio/Chon brachi assai.mp3"]
+  },
+
+  {
+    nombre: "Francesco Landini",
+    img: "img/landini.jpg",
+    periodo: ["Edad Media", "Ars nova", "Ars nova italiano"],
+    lugar: "Italia",
+    generos: ["Canción polifónica medieval", "Madrigal medieval", "Ballata"],
+    audios: ["audio/Non avrà ma' pietà.mp3", "audio/Musica Son Già Furon Ciascun Vuol.mp3", "audio/Non avra ma' pieta questa mia Donna.mp3", "audio/Questa fanciull', Amor.mp3"]
+  },// ecco la primavera 
+
+  {
+    nombre: "Jacobo da Bologna",
+    img: "img/dabologna.jpg",
+    periodo: ["Edad Media", "Ars nova", "Ars nova italiano"],
+    lugar: "Italia",
+    generos: ["Canción polifónica medieval", "Madrigal medieval", "Ballata"],
+    audios: ["audio/Aquila altera.mp3", "audio/O cieco mondo.mp3", "audio/Lucida petra.mp3"]
+  },
+
+
+
+
+
+
+  //PROTORENACIMIENTO
+  {
+    nombre: "John Dunstable",
+    img: "img/dunstable.jpg",
+    periodo: ["Renacimiento arcaico", "Renacimiento"],
+    lugar: "Inglaterra",
+    generos: ["Motete", "Misa"],
+    audios: ["audio/Quam pulchra es.mp3", "audio/Agnus Dei.mp3", "audio/O Rosa bella.mp3", "audio/Veni Sancte Spiritus.mp3"]
+  }, // regina celi / ascendit christus
+
+  {
+    nombre: "Gilles Binchois",
+    img: "img/binchois.jpg",
+    periodo: ["Renacimiento arcaico", "Renacimiento"],
+    lugar: "Francia",
+    generos: ["Motete", "Misa"],
+    audios: ["audio/Adieu m'mour et ma maistresse.mp3", "audio/De plus en plus.mp3", "audio/Triste plaisir et douleureuse joie.mp3"]
+  }, // adieu mon amoreuse joye
+
+  {
+    nombre: "Guillaume Dufay",
+    img: "img/dufay.jpg",
+    periodo: ["Renacimiento arcaico", "Renacimiento"],
+    lugar: "Francia",
+    generos: ["Motete", "Misa", "Hoquetus", "Fauxbourdon"],
+    audios: ["audio/Nuper rosarum flores.mp3", "audio/Missa L'homme armé - Kyrie.mp3", "audio/Apostolo glorioso.mp3", "audio/Vasilissa ergo gaude.mp3"]
+  }, // ave regina coelorum
+
+  {
+    nombre: "Johannes Ockeghem",
+    img: "img/ockeghem.jpg",
+    periodo: ["Escuela franco-flamenca", "Renacimiento"],
+    lugar: "Francia",
+    generos: ["Motete", "Misa", "Chanson"],
+    audios: ["audio/Missa Prolationum - Kyrie.mp3", "audio/Requiem.mp3", "audio/Qu'es mi vida, preguntais.mp3", "audio/Requiem - Sanctus.mp3"]
+  },
+
+  {
+    nombre: "Antoine Busnois",
+    img: "img/busnois.jpg",
+    periodo: ["Escuela franco-flamenca", "Renacimiento"],
+    lugar: "Francia",
+    generos: ["Motete"],
+    audios: ["audio/Fortuna desperata.mp3", "audio/Je ne puis vivre ainsy.mp3", "audio/Missa l'homme armé - Agnus Dei.mp3", "audio/Alleluya.mp3"]
+  }, // a vous sans autre
+
+  {
+    nombre: "Josquin des Prez",
+    img: "img/josquin_des_prez.jpg",
+    periodo: ["Escuela franco-flamenca", "Renacimiento"],
+    lugar: "Francia",
+    generos: ["Motete", "Misa", "Chanson", "Frottola"],
+    audios: ["audio/Misa Pange Lingua - Kyrie.mp3", "audio/Mille regretz.mp3", "audio/Nymphes des bois.mp3", "audio/De Profundis clamavi ad te.mp3"]
+  },
+
+  {
+    nombre: "Jacob Obrecht",
+    img: "img/obrecht.jpg",
+    periodo: ["Escuela franco-flamenca", "Renacimiento"],
+    lugar: "Flandes",
+    generos: ["Motete", "Misa", "Chanson"],
+    audios: ["audio/Missa Fortuna Desperata - I Kyrie.mp3", "audio/Parce Domine.mp3", "audio/Salve Regina.mp3"]
+  },
+
+ {
+    nombre: "Nicolas Gombert",
+    img: "img/gombert.jpg",
+    periodo: ["Escuela franco-flamenca", "Renacimiento"],
+    lugar: "Flandes",
+    generos: [],
+    audios: ["audio/Mille regretz - arreglo.mp3", "audio/Media vita.mp3"]
+  }, 
+
+  {
+    nombre: "Jacques Clément non Papa",
+    img: "img/clement.jpg",
+    periodo: ["Escuela franco-flamenca", "Renacimiento"],
+    lugar: "Flandes",
+    generos: [],
+    audios: ["audio/Tribulationes civitatum.mp3", "audio/Missa Pastores Quidnam Vidistis - Kyrie.mp3", "audio/Plourer, gémir et larmoyer me faut"]
+  }, 
+
+
+
+
+
+
+  // {
+  //   nombre: "Clement Janequin",
+  //   img: "img/janequin.jpg",
+  //   periodo:["Escuelas nacionales", "Renacimiento"],
+  //   lugar: "Francia",
+  //   generos: ["Chanson"],
+  //   audios: ["audio/O Souverain Pasteur et Maistre.mp3"]
+  // },
+
+
+
+
+//ESCUELAS NACIONALES
+//VENECIA
+
+  {
+    nombre: "Adrian Willaert",
+    img: "img/willaert.jpg",
+    periodo: ["Escuelas nacionales", "Escuela franco-flamenca", "Renacimiento", "Escuela veneciana"],
+    lugar: "Italia",
+    generos: [],
+    audios: ["audio/Aspro core et selvaggio.mp3", "audio/O dolce vita mia.mp3"]
+  }, // escuela veneciana
+
+  {
+    nombre: "Andrea Gabrieli",
+    img: "img/andreagabrieli.jpg",
+    periodo: ["Escuelas nacionales", "Escuela franco-flamenca", "Renacimiento", "Escuela veneciana"],
+    lugar: "Italia",
+    generos: [],
+    audios: ["audio/Jubilate Deo.mp3", "audio/Nativitas tua Dei genitrix.mp3"]
+  }, // escuela veneciana
+
+  {
+    nombre: "Giovanni Gabrieli",
+    img: "img/gabrieli.jpg",
+    periodo: ["Escuelas nacionales", "Escuela franco-flamenca", "Renacimiento", "Escuela veneciana", "Barroco", "Barroco temprano"],
+    lugar: "Italia",
+    generos: [],
+    audios: ["audio/O Magnum Mysterium.mp3", "audio/Canzon duodecimi.mp3", "audio/Omnes gentes.mp3"]
+  }, // escuela veneciana
+
+  {
+    nombre: "Orlando Di Lasso",
+    img: "img/dilasso.jpg",
+    periodo: ["Escuela franco-flamenca", "Renacimiento"], 
+    lugar: "Italia",
+    generos: [],
+    audios: ["audio/O la o che bon echo.mp3", "audio/Justorum animæ.mp3", "audio/Matona, mia cara.mp3"]
+  }, // CONTRARREFORMA
+
+  {
+    nombre: "G. Pierluigi da Palestrina",
+    img: "img/palestrina.jpg",
+    periodo: ["Escuela franco-flamenca", "Renacimiento"], //escuela romana??
+    lugar: "Italia",
+    generos: ["Misa", "Canción"],
+    audios: ["audio/Sicut cervus.mp3", "audio/Exsultate Deo.mp3", "audio/Veni Creator Spiritus.mp3"]
+  }, // CONTRARREFORMA
+
+  {
+    nombre: "Tomás Luis de Victoria",
+    img: "img/victoria.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Escuela española", "Escuela franco-flamenca"],
+    lugar: "España",
+    generos: [],
+    audios: ["audio/Ave Maria.mp3", "audio/O Vos Omnes.mp3", "audio/O sacrum convivium.mp3"]
+  }, // CONTRARREFORMA
+
+
+
+//ESPAÑOLA
+  {
+    nombre: "Cristóbal de Morales",
+    img: "img/morales.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Escuela española"],
+    lugar: "España",
+    generos: [],
+    audios: ["audio/Misa Mille Regretz - Kyrie.mp3", "audio/Missa Pro Defunctis - V Offertorium.mp3"]
+  }, // CONTRARREFORMA
+
+  {
+    nombre: "Francisco Guerrero",
+    img: "img/guerrero.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Escuela española"],
+    lugar: "España",
+    generos: [],
+    audios: ["audio/Prado Verde Y Florido.mp3", "audio/Ojos Claros.mp3"]
+  }, // CONTRARREFORMA
+
+  {
+    nombre: "Juan del Encina",
+    img: "img/delencina.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Escuela española"],
+    lugar: "España",
+    generos: [],
+    audios: ["audio/Hoy comamos y bebamos.mp3", "audio/Tan buen ganadico.mp3"]
+  },
+
+
+//INGLESA
+  {
+    nombre: "John Dowland",
+    img: "img/dowland.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Escuela inglesa", "Barroco temprano", "Barroco"],
+    lugar: "Inglaterra",
+    generos: [],
+    audios: ["audio/Flow my tears.mp3", "audio/Can she excuse my wrongs.mp3"]
+  },
+
+  {
+    nombre: "Thomas Morley",
+    img: "img/morley.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Escuela inglesa"],
+    lugar: "Inglaterra",
+    generos: ["Madrigal"],
+    audios: ["audio/Sing we and chant it.mp3", "audio/April Is In My Mistress' Face.mp3"]
+  },
+
+  {
+    nombre: "William Byrd",
+    img: "img/byrd.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Escuela inglesa"],
+    lugar: "Inglaterra",
+    generos: ["Misa", "Canción"],
+    audios: ["audio/Ave verum corpus.mp3", "audio/Byrd - O magnum mysterium.mp3"]
+  }, // REFORMA
+
+  {
+    nombre: "Thomas Tallis",
+    img: "img/tallis.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Escuela inglesa"],
+    lugar: "Inglaterra",
+    generos: ["Motete", "Misa"],
+    audios: ["audio/If ye love me.mp3", "audio/Tallis - O sacrum convivium.mp3"]
+  }, // REFORMA
+
+
+
+
+
+  {
+    nombre: "Philippe Verdelot",
+    img: "img/verdelot.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Madrigalistas"], //"Escuela veneciana"??
+    lugar: "Italia",
+    generos: ["Madrigal"],
+    audios: ["audio/O dolce nocte.mp3", "audio/Dormend'un giorno a Baia.mp3"]
+  }, //1er ESTADIO
+
+    {
+    nombre: "Jacques Arcadelt",
+    img: "img/arcadelt.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Madrigalistas"], //"Escuela veneciana"??
+    lugar: "Italia",
+    generos: ["Madrigal"],
+    audios: ["audio/Il bianco e dolce cigno.mp3", "audio/Arcadelt - Ave Maria.mp3"]
+  }, //2do ESTADIO
+
+    {
+    nombre: "Cypriano de Rore",
+    img: "img/rore.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Madrigalistas"], //"Escuela veneciana"??
+    lugar: "Italia",
+    generos: ["Madrigal"],
+    audios: ["audio/Cantai mentre ch'i arsi.mp3", "audio/Hor che'l ciel e la terra.mp3"]
+  },
+
+
+
+// //2ER ESTADIO - MUY MANIERISTA, CAMINO AL BARROCO
+    {
+    nombre: "Luca Marenzio",
+    img: "img/marenzio.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Madrigalistas"],
+    lugar: "Italia",
+    generos: ["Madrigal"],
+    audios: ["audio/Solo e pensoso i piú deserti campi.mp3", "audio/Crudel, acerba, inesorabile morte.mp3"]
+  },
+  
+      {
+    nombre: "Carlo Gesualdo",
+    img: "img/gesualdo.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Madrigalistas"],
+    lugar: "Italia",
+    generos: ["Madrigal"],
+    audios: ["audio/Sesto libro di madrigali - XVII Moro, lasso, al mio duolo.mp3", "audio/Sesto libro di madrigali_ VI _Io parto_ e non più dissi.mp3"]
+  },
+
+      {
+    nombre: "Luzzasco Luzzaschi",
+    img: "img/luzzaschi.jpg",
+    periodo: ["Escuelas nacionales", "Renacimiento", "Madrigalistas"],
+    lugar: "Italia",
+    generos: ["Madrigal"],
+    audios: ["audio/Aura soave.mp3", "audio/12 Madrigali per cantare e sonare_ N8, O dolcezze amarissime d'Amore.mp3"]
+  },
+
+        {
+    nombre: "Claudio Monteverdi",
+    img: "img/monteverdi.jpg",
+    periodo: ["Escuelas nacionales", "Madrigalistas", "Renacimiento", "Barroco temprano", "Barroco"],
+    lugar: "Italia",
+    generos: ["Madrigal"],
+    audios: ["audio/Ecco mormorar l'onde.mp3", "audio/Cantate Domino.mp3"]
+  },
+
+
+
+
+
+
+
+
+  {
+    nombre: "Giulio Caccini",
+    img: "img/caccini.jpg",
+    periodo: ["Barroco temprano", "Barroco"],
+    lugar: "Italia",
+    generos: [],
+    audios: ["audio/Caccini - Ave Maria.mp3", "audio/Amarilli, mia bella.mp3"]
+  },
+
+  {
+    nombre: "Girolamo Frescobaldi",
+    img: "img/frescobaldi.jpg",
+    periodo: ["Barroco temprano", "Barroco"],
+    lugar: "Italia",
+    generos: ["Música para teclado"],
+    audios: ["audio/Se l'aura spira.mp3", "audio/Così mi disprezzate.mp3"]
+  },
+
+  {
+    nombre: "Jan Pieterszoon Sweelinck",
+    img: "img/sweelinck.jpg",
+    periodo: ["Barroco temprano", "Barroco"],
+    lugar: "Países Bajos",
+    generos: [],
+    audios: ["audio/Ballo del Granduca.mp3"]
+  },
+
+  {
+    nombre: "Dietrich Buxtehude",
+    img: "img/buxtehude.jpg",
+    periodo: ["Barroco medio", "Barroco"],
+    lugar: "Alemania",
+    generos: [],
+    audios: ["audio/Sonata in A minor.mp3", "audio/Canzona.mp3"]
+  },
+
+  {
+    nombre: "Biagio Marini",
+    img: "img/marini.jpg",
+    periodo: ["Barroco temprano", "Barroco"],
+    lugar: "Italia",
+    generos: [],
+    audios: ["audio/Passacaglia.mp3", "audio/Sonata.mp3"]
+  },
+
+  {
+    nombre: "Johann Jakob Froberger",
+    img: "img/froberger.jpg",
+    periodo: ["Barroco medio", "Barroco"],
+    lugar: "Alemania",
+    generos: [],
+    audios: ["audio/Suite nº 1 en La menor.mp3", "audio/Toccata III.mp3"]
+  },
+
+
+  {
+    nombre: "Jean-Henri d'Anglebert",
+    img: "img/d'Anglebert.jpg",
+    periodo: ["Barroco medio", "Barroco"],
+    lugar: "Francia",
+    generos: [],
+    audios: ["audio/Suite in G minor- Prelude.mp3", "audio/Sarabande - Suite No. 3 in D minor.mp3"]
+  },
+
+
+
+  {
+    nombre: "Alessandro Scarlatti",
+    img: "img/scarlatti.jpg",
+    periodo: ["Barroco medio", "Barroco"],
+    lugar: "Italia",
+    generos: [],
+    audios: ["audio/Aria - Iam veni tu spes.mp3"]
+  },
+
+  {
+    nombre: "Jean-Baptiste Lully",
+    img: "img/lully.jpg",
+    periodo: ["Barroco medio", "Barroco"],
+    lugar: "Francia",
+    generos: ["Ópera"],
+    audios: ["audio/Marche pour la ceremonie des Turcs.mp3", "audio/Armide - Enfin, il est en ma puissance.mp3"]
+  },
+
+  {
+    nombre: "Henry Purcell",
+    img: "img/purcell.jpg",
+    periodo: ["Barroco medio", "Barroco"],
+    lugar: "Inglaterra",
+    generos: [],
+    audios: ["audio/Dido's Lament.mp3"]
+  },
+
+  {
+    nombre: "Georg Friedrich Händel",
+    img: "img/haendel.jpg",
+    periodo: ["Barroco tardío", "Barroco"],
+    lugar: "Inglaterra",
+    generos: ["Oratorio"],
+    audios: ["audio/Lascia ch'io pianga.mp3"]
+  },
+
+  {
+    nombre: "Arcangelo Corelli",
+    img: "img/corelli.jpg",
+    periodo: ["Barroco tardío", "Barroco"],
+    lugar: "Italia",
+    generos: ["Concerto grosso", "Sonata"],
+    audios: ["audio/Christmas Concerto (Vivace and Allegro).mp3"]
+  },
+
+  {
+    nombre: "Domenico Scarlatti",
+    img: "img/dscarlatti.jpg",
+    periodo: ["Barroco tardío", "Barroco"],
+    lugar: "Italia",
+    generos: [],
+    audios: ["audio/Sonata K380.mp3"]
+  },
+
+  // {
+  //   nombre: "Leonardo Vinci",
+  //   img: "img/vinci.jpg",
+  //   periodo: ["Barroco tardío", "Barroco"],
+  //   lugar: "Italia",
+  //   generos: [],
+  //   audios: []
+  // },
+
+  {
+    nombre: "Antonio Vivaldi",
+    img: "img/vivaldi.jpg",
+    periodo: ["Barroco tardío", "Barroco"],
+    lugar: "Italia",
+    generos: ["Concerto grosso"],
+    audios: ["audio/Violin Concerto in A Minor RV356.mp3", "audio/Violin Concerto In C Minor RV197.mp3"]
+  },
+
+  {
+    nombre: "Jean-Philippe Rameau",
+    img: "img/rameau.jpg",
+    periodo: ["Barroco tardío", "Barroco"],
+    lugar: "Francia",
+    generos: ["Ópera"],
+    audios: ["audio/Suite in E minor.mp3", "audio/Platée.mp3"]
+  },
+
+  {
+    nombre: "Giuseppe Torelli",
+    img: "img/torelli.jpg",
+    periodo: ["Barroco tardío", "Barroco"],
+    lugar: "Italia",
+    generos: [],
+    audios: ["audio/Concierto para Trompeta y Orquesta en Re Mayor.mp3"]
+  },
+  
+  {
+    nombre: "François Couperin",
+    img: "img/couperin.jpg",
+    periodo: ["Barroco tardío", "Barroco"],
+    lugar: "Francia",
+    generos: [],
+    audios: ["audio/Premier Concert in G major (preludio).mp3", "audio/Le Tic Toc Choc ou Les Maillotins.mp3"]
+  },
+
+  {
+    nombre: "Johann Sebastian Bach",
+    img: "img/bach.jpg",
+    periodo: ["Barroco tardío", "Barroco"],
+    lugar: "Alemania",
+    generos: ["Concierto", "Fuga"],
+    audios: ["audio/Fugue in G Minor, BWV 578.mp3", "audio/8 short preludes and fugues 7. A minor BWV 559.mp3"]
+  },
+
+  {
+    nombre: "Johann Mattheson",
+    img: "img/mattheson.jpg",
+    periodo: ["Barroco tardío", "Barroco"],
+    lugar: "Alemania",
+    generos: [],
+    audios: ["audio/Suite N1 for Harpsichord I.mp3", "audio/Suite.mp3"]
+  },
+
+  {
+    nombre: "Georg Philipp Telemann",
+    img: "img/telemann.jpg",
+    periodo: ["Barroco tardío", "Barroco"],
+    lugar: "Alemania",
+    generos: [],
+    audios: ["audio/Concerto polonois.mp3", "audio/Concierto en re for Trumpet.mp3"]
+  }
+];
+
+
+
+let reproductorActual = null;
+let botonActivo = null;
+let compositorActivo = null;
+let ultimoAudio = null;
+
+function crearTarjeta(compositor) {
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  const periodos = Array.isArray(compositor.periodo) ? compositor.periodo : [compositor.periodo];
+  const generos = Array.isArray(compositor.generos) ? compositor.generos : (compositor.generos ? [compositor.generos] : []);
+  const audios = compositor.audios || [];
+
+  card.dataset.periodo = JSON.stringify(periodos);
+  card.dataset.lugar = compositor.lugar;
+  card.dataset.generos = JSON.stringify(generos);
+
+  card.innerHTML = `
+    <div class="card-inner">
+      <div class="card-front">
+        <img src="${compositor.img}" alt="${compositor.nombre}">
+        <div class="nombre">${compositor.nombre}</div>
+        ${
+          audios.length > 0
+            ? `
+            <div class="audio-controls">
+  <button class="play-btn" title="Reproducir / Pausar">
+    <i class="fa fa-play"></i>
+  </button>
+  <button class="next-btn" title="Siguiente audio">
+    <i class="fa fa-random"></i>
+  </button>
+</div>
+
+              `
+            : ''
+        }
+      </div>
+    </div>
+    <div class="base"></div>
+  `;
+
+  if (audios.length > 0) {
+    const btnPlay = card.querySelector('.play-btn');
+    const btnNext = card.querySelector('.next-btn');
+
+    const reproducirAudio = (nuevo = false) => {
+      // Si hay un audio actual que no es de este compositor, lo detenemos
+      if (reproductorActual && compositorActivo !== compositor.nombre) {
+        reproductorActual.pause();
+        if (botonActivo) {
+          botonActivo.querySelector('i').className = 'fa fa-play';
+        }
+      }
+
+      let audioURL;
+
+      // Si queremos uno diferente al último reproducido
+      const posibles = audios.filter(a => a !== ultimoAudio);
+      audioURL = (nuevo && posibles.length > 0)
+        ? posibles[Math.floor(Math.random() * posibles.length)]
+        : audios[Math.floor(Math.random() * audios.length)];
+
+      ultimoAudio = audioURL;
+
+      // Crear y reproducir el nuevo audio
+      reproductorActual = new Audio(audioURL);
+
+
+
+// const infoGlobal = document.getElementById('audio-global-info');
+// if (infoGlobal) {
+//   const nombreLimpio = audioURL.split('/').pop().replace('.mp3', '').replace(/_/g, ' ');
+//   const nombreCapitalizado = nombreLimpio.replace(/\b\w/g, c => c.toUpperCase());
+//   infoGlobal.textContent = `🎵 Reproduciendo: ${compositor.nombre} – ${nombreCapitalizado}`;
+//   infoGlobal.style.display = 'block';
+// }
+
+
+
+
+      reproductorActual.play();
+      
+      reproductorActual.addEventListener('ended', () => {
+        if (btnPlay) btnPlay.querySelector('i').className = 'fa fa-play';
+        reproductorActual = null;
+        botonActivo = null;
+        compositorActivo = null;
+ 
+      });
+
+      botonActivo = btnPlay;
+      compositorActivo = compositor.nombre;
+      btnPlay.querySelector('i').className = 'fa fa-pause';
+    };
+
+    btnPlay.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      if (reproductorActual && compositorActivo === compositor.nombre) {
+        if (reproductorActual.paused) {
+          reproductorActual.play();
+          btnPlay.querySelector('i').className = 'fa fa-pause';
+        } else {
+          reproductorActual.pause();
+          btnPlay.querySelector('i').className = 'fa fa-play';
+        }
+      } else {
+        reproducirAudio(); // nuevo compositor o nada sonando
+      }
+    });
+
+    btnNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (reproductorActual) {
+        reproductorActual.pause();
+      }
+      reproducirAudio(true); // fuerza audio distinto
+    });
+  }
+
+  card.addEventListener('click', () => {
+    card.classList.toggle('caida');
+  });
+
+  return card;
+}
+
+
+const reproductorGlobal = new Audio();
+let audioActualGlobal = null;
+
+function obtenerTodosLosAudios() {
+  return datosCompositores
+    .flatMap(comp => comp.audios || []);
+}
+
+
+
+// Al cargar la página, asignar un audio random para que play funcione desde el principio
+audioActualGlobal = obtenerTodosLosAudios()[0] || null;  // primer audio de la lista o null si no hay
+if (audioActualGlobal) {
+  reproductorGlobal.src = audioActualGlobal;
+}
+
+
+function togglePlayPauseGlobal() {
+  if (reproductorGlobal.paused) {
+    if (!reproductorGlobal.src && audioActualGlobal) {
+      reproductorGlobal.src = audioActualGlobal;
+    }
+    reproductorGlobal.play();
+  } else {
+    reproductorGlobal.pause();
+  }
+}
+
+const botonesGlobales = document.getElementById('botones-globales');
+
+const infoAudioGlobal = document.getElementById('audio-global-info');
+const tituloPrincipal = document.getElementById('titulo-principal');
+
+tituloPrincipal.addEventListener('click', () => {
+  if (infoAudioGlobal.style.display === 'none') {
+    infoAudioGlobal.style.display = 'block';
+  } else {
+    infoAudioGlobal.style.display = 'none';
+  }
+});
+
+
+function actualizarInfoAudioGlobal() {
+  if (!audioActualGlobal) {
+    infoAudioGlobal.textContent = 'No hay audio reproduciéndose';
+    return;
+  }
+
+  const compositorActual = datosCompositores.find(comp =>
+    (comp.audios || []).includes(audioActualGlobal)
+  );
+
+  const nombreArchivo = audioActualGlobal.split('/').pop().replace('.mp3', '').replace(/_/g, ' ');
+  const nombreCapitalizado = nombreArchivo.replace(/\b\w/g, c => c.toUpperCase());
+
+  if (compositorActual) {
+    infoAudioGlobal.textContent = `🎵 Reproduciendo: ${compositorActual.nombre} – ${nombreCapitalizado}`;
+  } else {
+    infoAudioGlobal.textContent = `🎵 Reproduciendo: ${nombreCapitalizado}`;
+  }
+}
+
+// function actualizarInfoAudioGlobal() {
+//   if (!audioActualGlobal) {
+//     infoAudioGlobal.textContent = 'No hay audio reproduciéndose';
+//     return;
+//   }
+
+//   const compositorActual = datosCompositores.find(comp =>
+//     (comp.audios || []).includes(audioActualGlobal)
+//   );
+
+//   const nombreLimpio = audioActualGlobal.split('/').pop().replace('.mp3', '').replace(/_/g, ' ');
+//   const nombreCapitalizado = nombreLimpio.replace(/\b\w/g, c => c.toUpperCase());
+
+//   if (compositorActual) {
+//     infoAudioGlobal.textContent = `🎵 Reproduciendo: ${compositorActual.nombre} – ${nombreCapitalizado}`;
+//   } else {
+//     infoAudioGlobal.textContent = `🎵 Reproduciendo audio desconocido – ${nombreCapitalizado}`;
+//   }
+// }
+
+
+function reproducirAudioAleatorioGlobal() {
+  const todosLosAudios = obtenerTodosLosAudios();
+  if (todosLosAudios.length === 0) {
+    audioActualGlobal = null;
+    infoAudioGlobal.textContent = '';
+    return;
+  }
+
+  const nuevoAudio = todosLosAudios[Math.floor(Math.random() * todosLosAudios.length)];
+  reproductorGlobal.src = nuevoAudio;
+  audioActualGlobal = nuevoAudio;
+  reproductorGlobal.play();
+  actualizarInfoAudioGlobal();
+}
+
+function togglePlayPauseGlobal() {
+  if (reproductorGlobal.paused) {
+    if (!reproductorGlobal.src && audioActualGlobal) {
+      reproductorGlobal.src = audioActualGlobal;
+    }
+    reproductorGlobal.play();
+    actualizarInfoAudioGlobal();
+  } else {
+    reproductorGlobal.pause();
+    infoAudioGlobal.textContent = 'Audio pausado';
+  }
+}
+
+
+
+const contenedorGlobal = document.createElement('div');
+contenedorGlobal.className = 'audio-controls'; // para el mismo layout flex y gap
+
+const btnGlobalPlayPause = document.createElement('button');
+btnGlobalPlayPause.className = 'play-btn';
+btnGlobalPlayPause.title = 'Reproducir / Pausar';
+btnGlobalPlayPause.innerHTML = '<i class="fa fa-play"></i>';
+
+btnGlobalPlayPause.addEventListener('click', () => {
+  togglePlayPauseGlobal(); // usa tu función completa
+  btnGlobalPlayPause.querySelector('i').className = reproductorGlobal.paused ? 'fa fa-play' : 'fa fa-pause';
+});
+
+const btnGlobalNext = document.createElement('button');
+btnGlobalNext.className = 'play-btn';
+btnGlobalNext.title = 'Siguiente audio aleatorio';
+btnGlobalNext.innerHTML = '<i class="fa fa-random"></i>';
+
+btnGlobalNext.addEventListener('click', () => {
+  if (!reproductorGlobal.paused) {
+    reproductorGlobal.pause();
+  }
+  reproducirAudioAleatorioGlobal();
+  btnGlobalPlayPause.querySelector('i').className = 'fa fa-pause';
+});
+
+contenedorGlobal.appendChild(btnGlobalPlayPause);
+contenedorGlobal.appendChild(btnGlobalNext);
+
+botonesGlobales.appendChild(contenedorGlobal);
+
+
+
+const tablero = document.getElementById('tablero');
+datosCompositores.forEach(compositor => {
+  const tarjeta = crearTarjeta(compositor);
+  tablero.appendChild(tarjeta);
+});
+
+// 🔁 NUEVO: obtener los filtros desde checkboxes
+function obtenerFiltrosCheckbox() {
+  const filtros = {
+    periodo: [],
+    lugar: [],
+    genero: []
+  };
+
+  document.querySelectorAll('#filtros input[type="checkbox"]:checked').forEach(checkbox => {
+    const name = checkbox.name;
+    const value = checkbox.value;
+    if (filtros[name]) {
+      filtros[name].push(value);
+    }
+  });
+
+  return filtros;
+}
+
+// 🔁 NUEVO: aplicar filtros usando checkboxes
+function aplicarFiltrosCheckbox() {
+  const filtros = obtenerFiltrosCheckbox();
+
+  const tarjetas = document.querySelectorAll('.card');
+  tarjetas.forEach(card => {
+    const datosPeriodo = JSON.parse(card.dataset.periodo);
+    const datoslugar = card.dataset.lugar;
+    const datosGeneros = JSON.parse(card.dataset.generos);
+
+    const coincidePeriodo = filtros.periodo.length === 0 || filtros.periodo.some(f => datosPeriodo.includes(f));
+    const coincidelugar = filtros.lugar.length === 0 || filtros.lugar.includes(datoslugar);
+    const coincideGenero = filtros.genero.length === 0 || datosGeneros.some(g => filtros.genero.includes(g));
+
+    card.style.display = (coincidePeriodo && coincidelugar && coincideGenero) ? '' : 'none';
+  });
+}
+
+// 🔁 NUEVO: agregar listeners a los checkboxes
+document.querySelectorAll('#filtros input[type="checkbox"]').forEach(checkbox => {
+  checkbox.addEventListener('change', aplicarFiltrosCheckbox);
+});
+
+// Escape para cerrar tarjetas abiertas
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.card.caida').forEach(card => card.classList.remove('caida'));
+  }
+});
+
+
+
+
+// const reproductorGlobal = new Audio();
+// let audioGlobalSonando = false;
+
+// document.getElementById('btn-global-play').addEventListener('click', () => {
+//   const btn = document.getElementById('btn-global-play');
+
+//   if (audioGlobalSonando) {
+//     reproductorGlobal.pause();
+//     reproductorGlobal.currentTime = 0;
+//     btn.textContent = '▶️ Aleatorio';
+//     audioGlobalSonando = false;
+//     return;
+//   }
+
+//   // Juntar todos los audios desde datosCompositores
+//   const todosLosAudios = datosCompositores.flatMap(comp => comp.audios || []);
+
+//   if (todosLosAudios.length === 0) return;
+
+//   const audioAleatorio = todosLosAudios[Math.floor(Math.random() * todosLosAudios.length)];
+
+//   reproductorGlobal.src = audioAleatorio;
+//   reproductorGlobal.play();
+
+//   audioGlobalSonando = true;
+//   btn.textContent = '⏸️ Pausar';
+
+//   reproductorGlobal.onended = () => {
+//     audioGlobalSonando = false;
+//     btn.textContent = '▶️ Aleatorio';
+//   };
+// });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleBtn = document.getElementById("toggle-filtros");
+  const filtros = document.getElementById("filtros");
+
+  // Al cargar, ocultar filtros y poner texto "Mostrar filtros"
+  filtros.classList.add("hidden-mobile");
+  toggleBtn.textContent = "Mostrar filtros";
+
+  toggleBtn.addEventListener("click", () => {
+    const oculto = filtros.classList.toggle("hidden-mobile");
+    toggleBtn.textContent = oculto ? "Mostrar filtros" : "Ocultar filtros";
+  });
+});
+
+  </script>
+
+<p class="aclaracion-filtros text-left text-muted small mb-2">
+  *Las imágenes son ilustrativas y pueden no representar con exactitud al compositor.
+</p>
+
+</body>
+</html>
