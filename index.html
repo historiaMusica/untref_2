@@ -465,6 +465,46 @@ body::before {
 }
 
 @media (max-width: 768px) {
+
+#filtros {
+  padding: 20px 18px;
+}
+
+#filtros fieldset {
+  margin-bottom: 15px;
+}
+
+#filtros legend {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+#filtros label {
+  font-size: 0.95rem;
+  line-height: 1.25;
+  margin-bottom: 2px;
+}
+
+/* Lugar de influencia en DOS columnas */
+.lugares-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 18px;
+  justify-items: start;
+}
+
+/* Aclaración */
+.filtros-info {
+  margin-top: 18px;
+  font-size: .82rem;
+  line-height: 1.3;
+  text-align: center;
+  padding: 0 8px;
+}
+
+}
+
+@media (max-width: 768px) {
   #toggle-filtros {
     display: inline-block;
   }
@@ -506,10 +546,30 @@ body::before {
     /* #filtros .d-grid {
       justify-items: center;
     } */
-  
+    @media (max-width: 768px) {
 
+/* Los títulos siguen centrados */
+.filtros fieldset{
+  text-align: center;
+}
 
+/* Pero la lista queda alineada y con el ancho justo */
+.filtros fieldset .d-grid{
+  display: inline-grid !important;
+  text-align: left;
+  margin: 0 auto;
+}
 
+.filtros fieldset .form-check-label{
+  display: block;
+  white-space: nowrap;
+}
+
+.filtros legend{
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+}
   @media (max-width: 550px) {
     body::before {
     background-size: cover;
@@ -517,6 +577,8 @@ body::before {
     background-attachment: scroll; /* 🔄 importante para móviles */
   }
 
+
+  
     #filtros label {
       font-size: 0.85rem;
     }
@@ -579,7 +641,9 @@ body::before {
             <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Romanticismo 1ra mitad">Romanticismo 1ra mitad</label> 
             <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Romanticismo 2da mitad">Romanticismo 2da mitad</label> 
             <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Postromanticismo">Postromanticismo</label> 
-            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Siglo XX">Siglo XX</label> 
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Nacionalismos">Nacionalismos</label> 
+            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="SigloXX">Siglo XX</label> 
+            
 
 
 
@@ -607,25 +671,40 @@ body::before {
             <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="periodo" value="Barroco tardío">Barroco tardío</label>
             </div>
         </fieldset>
-      </div> -->
+      </div>-->
+    
 
-
-
-
-  
-      <!-- lugar -->
-      <div class="col-12 col-md-4 fs-sm">
+      <div class="col-12 col-md-6 fs-sm">
         <fieldset>
           <legend class="h6 fw-bold text-center mb-3">Lugar de influencia</legend>
-          <div class="d-grid gap-1 text-start lh-sm">
-            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Alemania">Alemania</label>
-            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Francia">Francia</label>
-            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Italia">Italia</label>
-            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Austria">Austria</label>
-            <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Polonia">Polonia</label>
-            <!-- <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="España">España</label> -->
-            <!-- <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Suiza">Suiza</label> -->
+      
+          <div class="row">
+      
+            <!-- Columna izquierda -->
+            <div class="col-12 col-md-6">              <div class="d-grid gap-1 text-start lh-sm">
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Alemania">Alemania</label>
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Francia">Francia</label>
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Italia">Italia</label>
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Austria">Austria</label>
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Polonia">Polonia</label>
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="España">España</label>
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Argentina">Argentina</label>
+              </div>
+            </div>
+      
+            <!-- Columna derecha -->
+            <div class="col-12 col-md-6">              <div class="d-grid gap-1 text-start lh-sm">
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Estados Unidos">Estados Unidos</label>
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="República Checa">República Checa</label>
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Brasil">Brasil</label>
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Noruega">Noruega</label>
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="Finlandia">Finlandia</label>
+                <label class="form-check-label"><input class="form-check-input me-2" type="checkbox" name="lugar" value="México">México</label>
+              </div>
+            </div>
+      
           </div>
+      
         </fieldset>
       </div>
   
@@ -866,7 +945,7 @@ body::before {
     nombre: "Franz Liszt",
     img: "img/liszt.jpg",
     periodo: ["Romanticismo", "Romanticismo 2da mitad"],
-    lugar: ["Austria", "Alemania"],
+    lugar: ["Hungría", "Alem0ania"],
     generos: [""],
     audios: ["audio/Estudio de concierto N 3 Un Sospiro.mp3"]
   },
@@ -933,7 +1012,7 @@ body::before {
     periodo: ["Romanticismo", "Romanticismo 2da mitad"],
     lugar: "Francia",
     generos: [""],
-    audios: ["audio/Danse roumaine for Pedal Piano and Orchestra.mp3"]
+    audios: ["audio/Danse roumaine for Pedal Piano and Orchestra.mp3", "audio/"]
   },
 
   {
@@ -1014,10 +1093,15 @@ body::before {
     audios: ["audio/Aria Vesti la giubba - I Pagliacci.mp3"]
   },
 
-//Ópera Alemana
 
-{
-    nombre: "Johann Baptist Strauss I",
+
+
+
+
+  // Siglo XX
+
+  {
+    nombre: "Johann Strauss",
     img: "img/strauss.jpg",
     periodo: ["Postromanticismo"],
     lugar: "Alemania",
@@ -1025,13 +1109,10 @@ body::before {
     audios: ["audio/"]
   },
 
-
-
-  // Siglo XX
   {
     nombre: "Giacomo Puccini",
     img: "img/puccini.jpg",
-    periodo: ["Postromanticismo"],
+    periodo: ["Postromanticismo", "Siglo XX "],
     lugar: "Italia",
     generos: [""],
     audios: ["audio/"]
@@ -1042,7 +1123,7 @@ body::before {
   {
     nombre: "Claude Debussy",
     img: "img/debussy.jpg",
-    periodo: ["Postromanticismo"],
+    periodo: ["Postromanticismo", "Siglo XX"],
     lugar: "Francia",
     generos: [""],
     audios: ["audio/"]
@@ -1055,7 +1136,7 @@ body::before {
   {
     nombre: "Mili Balákirev",
     img: "img/balakirev.jpg",
-    periodo: ["Postromanticismo"],
+    periodo: ["Nacionalismos"],
     lugar: "Rusia",
     generos: [""],
     audios: ["audio/"]
@@ -1066,7 +1147,7 @@ body::before {
   {
     nombre: "Aleksandr Borodín",
     img: "img/borodin.jpg",
-    periodo: ["Postromanticismo"],
+    periodo: ["Nacionalismos"],
     lugar: "Rusia",
     generos: [""],
     audios: ["audio/"]
@@ -1075,7 +1156,7 @@ body::before {
   {
     nombre: "César Cui",
     img: "img/cui.jpg",
-    periodo: ["Postromanticismo"],
+    periodo: ["Nacionalismos"],
     lugar: "Rusia",
     generos: [""],
     audios: ["audio/"]
@@ -1084,7 +1165,7 @@ body::before {
   {
     nombre: "Modest Músorgski",
     img: "img/musorgski.jpg",
-    periodo: ["Postromanticismo"],
+    periodo: ["Nacionalismos"],
     lugar: "Rusia",
     generos: [""],
     audios: ["audio/"]
@@ -1093,12 +1174,250 @@ body::before {
   {
     nombre: "Nikolai Rimski-Kórsakov",
     img: "img/rimski.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Rusia",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Richard Strauss",
+    img: "img/strauss2.jpg",
+    periodo: ["Postromanticismo", "SigloXX"],
+    lugar: "Alemania",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+
+  //nacionalismos
+
+  {
+    nombre: "Stephen Foster",
+    img: "img/foster.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Estados Unidos",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Piotr Ilich Chaikovski",
+    img: "img/chaikovski.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Rusia",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Karol Szymanowski",
+    img: "img/szymanowski.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Polonia",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Antonín Dvořák",
+    img: "img/dvorak.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "República Checa",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Bedřich Smetana",
+    img: "img/smetana.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "República Checa",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Heitor Villa-Lobos",
+    img: "img/villalobos.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Brasil",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Joaquín Rodrigo",
+    img: "img/rodrigo.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "España",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Manuel de Falla",
+    img: "img/falla.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "España",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Isaac Albéniz",
+    img: "img/albeniz.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "España",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Enrique Granados",
+    img: "img/granados.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "España",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Edvard Grieg",
+    img: "img/grieg.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Noruega",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Alberto Williams",
+    img: "img/williams.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Argentina",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Julián Aguirre",
+    img: "img/aguirre.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Argentina",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Carlos López Buchardo",
+    img: "img/buchardo.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Argentina",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Floro Ugarte",
+    img: "img/ugarte.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Argentina",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Gilardo Gilardi",
+    img: "img/gilardi.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Argentina",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Héctor Panizza",
+    img: "img/panizza.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Argentina",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+
+  {
+    nombre: "Jean Sibelius",
+    img: "img/sibelius.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "Finlandia",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Carlos Chávez",
+    img: "img/chavez.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "México",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Silvestre Revueltas",
+    img: "img/revueltas.jpg",
+    periodo: ["Nacionalismos"],
+    lugar: "México",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "César Franck",
+    img: "img/franck.jpg",
+    periodo: ["Postromanticismo"],
+    lugar: "Francia",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Gabriel Fauré",
+    img: "img/faure.jpg",
+    periodo: ["Postromanticismo"],
+    lugar: "Francia",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Gustav Mahler",
+    img: "img/mahler.jpg",
+    periodo: ["Postromanticismo"],
+    lugar: "Alemania",
+    generos: [""],
+    audios: ["audio/"]
+  },
+
+  {
+    nombre: "Serguéi Rajmáninov",
+    img: "img/rajmaninov.jpg",
     periodo: ["Postromanticismo"],
     lugar: "Rusia",
     generos: [""],
     audios: ["audio/"]
   },
 
+  {
+    nombre: "Aleksandr Skriabin",
+    img: "img/scriabin.jpg",
+    periodo: ["Postromanticismo"],
+    lugar: "Rusia",
+    generos: [""],
+    audios: ["audio/"]
+  }
+  
 ];
 
 
