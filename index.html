@@ -584,13 +584,30 @@ body::before {
       font-size: 0.85rem;
     }
 
-    .card {
-      width: 130px;
-      height: 220px;
-      perspective: 1000px;
-      position: relative;
-      cursor: pointer;
-    }
+    body{
+    padding:12px;
+  }
+
+  .grid{
+    padding:12px;
+    gap:10px;
+  }
+
+  .card{
+    width:calc(50% - 10px);
+    max-width:145px;
+    min-width:135px;
+    height:220px;
+  }
+
+  .base{
+    width:100%;
+  }
+
+  .card-front img{
+    width:90px;
+    height:90px;
+  }
 
     #titulo-principal {
     font-size: 1.2rem;
@@ -601,6 +618,7 @@ body::before {
   }
   }
 
+  
   </style>
 </head>
 <body>
