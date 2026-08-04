@@ -571,7 +571,7 @@ body::before {
   margin-bottom: 1rem;
 }
 }
-  @media (max-width: 550px) {
+  @media (max-width: 565px) {
     body::before {
     background-size: cover;
     background-position: center top;
@@ -616,6 +616,25 @@ body::before {
     font-size: 1.2rem;
     padding: 0.3rem 0.6rem;
   }
+
+  #encabezado-global{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #botones-globales{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  #botones-globales .audio-controls{
+    justify-content: center;
+  }
+
   }
 
   
@@ -1710,12 +1729,23 @@ btnGlobalNext.addEventListener('click', () => {
   btnGlobalPlayPause.querySelector('i').className = 'fa fa-pause';
 });
 
+
+const btnLevantar = document.createElement("button");
+btnLevantar.className = "play-btn";
+btnLevantar.title = "Levantar todas las tarjetas";
+btnLevantar.innerHTML = '<i class="fa fa-undo"></i>';
+
 contenedorGlobal.appendChild(btnGlobalPlayPause);
 contenedorGlobal.appendChild(btnGlobalNext);
-
+contenedorGlobal.appendChild(btnLevantar);
 botonesGlobales.appendChild(contenedorGlobal);
 
 
+btnLevantar.addEventListener('click', () => {
+  document.querySelectorAll('.card.caida').forEach(card => {
+    card.classList.remove('caida');
+  });
+});
 
 const tablero = document.getElementById('tablero');
 datosCompositores.forEach(compositor => {
